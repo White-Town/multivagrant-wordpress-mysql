@@ -49,33 +49,34 @@ project-folder/
 ### 3. Start the Virtual Machines
 
 Navigate to the project directory and start the VMs:
+
  ``` bash
     cd project-directory
     vagrant up
 ```
+
 This command will provision both the Web VM and the Database VM.
 
 ### 4. Accessing the Setup
 
 Once the VMs are up and running, you can access the services as follows:
+   MySQL: Connect to the database at 192.168.56.7 using the credentials:
 
-    WordPress: Open http://192.168.56.6 in your web browser.
+  Username: wpuser
 
-    MySQL: Connect to the database at 192.168.56.7 using the credentials:
-
-        Username: wpuser
-
-        Password: password
+  Password: password
 
 ### 5. Stopping & Destroying VMs
 
 - To stop the VMs:
+
 ``` bash
 
 vagrant halt
 ```
 
 - To completely remove the VMs:
+
 ``` bash
 vagrant destroy -f
 ```
@@ -87,11 +88,12 @@ Web Server Issues: If the web server fails to start, re-run the provisioning scr
 ``` bash
     vagrant provision web
 ```
+
 MySQL Access Issues: If MySQL is not accessible, check the firewall settings on the Database VM:
 
 ```bash
     sudo ufw status
-```    
+```
 
 ### Conclusion
 
@@ -104,5 +106,4 @@ This project is licensed under the MIT License.
 ### Contribution
 
 Feel free to fork this repository and submit pull requests.
-
-Thank You ..
+Thank You
