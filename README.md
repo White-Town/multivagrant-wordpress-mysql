@@ -25,8 +25,8 @@ Follow these steps to set up and run the multi-VM environment.
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+git@github.com:White-Town/multivagrant-wordpress-mysql.git
+cd multivagrant-wordpress-mysql
 ```
 
 ### 2. Project Structure
@@ -35,7 +35,7 @@ After cloning, the project structure should look like this:
 
 ``` bash
 
-project-folder/
+multivagrant-wordpress-mysql/
 │── Vagrantfile                   # Main Vagrant configuration file
 │── scripts/
 │   ├── common.sh                 # Common provisioning script for all VMs
@@ -49,34 +49,31 @@ project-folder/
 ### 3. Start the Virtual Machines
 
 Navigate to the project directory and start the VMs:
-
  ``` bash
-    cd project-directory
+    cd multivagrant-wordpress-mysql
     vagrant up
 ```
-
 This command will provision both the Web VM and the Database VM.
 
 ### 4. Accessing the Setup
 
 Once the VMs are up and running, you can access the services as follows:
-   MySQL: Connect to the database at 192.168.56.7 using the credentials:
 
-  Username: wpuser
+    WordPress: Open http://192.168.56.6 in your web browser.
+    
+        Username: wordpress-user
 
-  Password: password
+        Password: password
 
 ### 5. Stopping & Destroying VMs
 
 - To stop the VMs:
-
 ``` bash
 
 vagrant halt
 ```
 
 - To completely remove the VMs:
-
 ``` bash
 vagrant destroy -f
 ```
@@ -88,12 +85,34 @@ Web Server Issues: If the web server fails to start, re-run the provisioning scr
 ``` bash
     vagrant provision web
 ```
+Change the bind address. Got the given file and set bind address to 0.0.0.0
+cd /etc/mysql/mysql.conf.d/mysqld.cnf
+- bind-address		= 0.0.0.0
+Go to this directory and change the document root to
+- DocumentRoot /srv/www/wordpress
+
+And add this file below document root
+```bash
+    <Directory /srv/www/wordpress>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+
+```
+One more thing to do is go this directory and add 
+- vim /etc/mysql/my.cnf
+  ```bash
+  [mysqld]
+   bind-address = 0.0.0.0
+  ```
 
 MySQL Access Issues: If MySQL is not accessible, check the firewall settings on the Database VM:
 
 ```bash
     sudo ufw status
-```
+```    
 
 ### Conclusion
 
@@ -106,4 +125,8 @@ This project is licensed under the MIT License.
 ### Contribution
 
 Feel free to fork this repository and submit pull requests.
-Thank You
+### Reference
+- https://gist.github.com/rmatil/8d21620c11039a442964
+
+
+Thank You ..
